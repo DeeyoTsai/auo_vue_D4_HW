@@ -1,5 +1,18 @@
-<script setup></script>
+<script setup>
+import {ref, reactive} from "vue"
 
-<template></template>
+const item = ref('')
+
+
+
+
+</script>
+
+<template>
+
+
+
+
+</template>
 
 <style scoped></style>
