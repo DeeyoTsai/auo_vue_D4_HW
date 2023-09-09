@@ -1,9 +1,13 @@
 <script setup>
-import {ref, reactive} from "vue"
+import {ref, reactive, onBeforeMount} from "vue"
 
 const item = ref('');
 const itemArray = reactive([]);
-// const toggle = ref(false)
+const storageKey = "ItemList";
+
+const save = (key, value) => {
+    localStorage.setItem(key, JSON.stringify(value));
+}
 
 const addItem = () => {
     if (item.value !== ""){
@@ -13,6 +17,7 @@ const addItem = () => {
     };
     
     itemArray.unshift(item_obj);
+    save(storageKey, itemArray);
     item.value = "";
     };
 };
@@ -22,8 +27,13 @@ const removeItem = (id) => {
         return item === id;
     })
     itemArray.splice(index,1);
-}
+    save(storageKey, itemArray);
+};
 
+onBeforeMount(() => {
+  const saveDevices = JSON.parse(localStorage.getItem(storageKey))
+  itemArray.push(...saveDevices)
+})
 
 </script>
 
@@ -68,6 +78,7 @@ const removeItem = (id) => {
 
     </ul>
   </section>
+
 </template>
 
 <style scoped>
